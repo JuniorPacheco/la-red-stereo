@@ -1,14 +1,16 @@
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import { ChevronLeft, ChevronRight, Link, RadioIcon, Search } from "lucide-react"
+import { cn } from "@/lib/utils"
+import { ChevronLeft, ChevronRight, MenuIcon, RadioIcon, X } from "lucide-react"
 import { useEffect, useRef, useState } from 'react'
 
 export default function HomePage() {
   const [currentSlide, setCurrentSlide] = useState(0)
-  const [showSearch, setShowSearch] = useState(false)
+  const [currentNewsSlide, setCurrentNewsSlide] = useState(0)
   const collaboratorsRef = useRef<HTMLDivElement>(null)
+  const [showMobileNav, setShowMobileNav] = useState(false)
 
-  const publications = [
+  const events = [
     {
       title: "Verdurería la 21 Saravena",
       content: "Gran sorteo de la Verdureria La 21 Saravena participa y gana un bono redimible por $ 150.000 pesos en verdura o víveres en este gran establecimiento",
@@ -23,6 +25,24 @@ export default function HomePage() {
       title: "Inicio Semana comercial - Alabanza y Adoración",
       content: "Invitación especial para que nos acompañen en este superconcierto de alabanza y adoración de Inicio de semana comercial de Ascomercial #Saravena #SaravenaArauca",
       image: "/bendicion.png"
+    },
+  ]
+
+  const news = [
+    {
+      title: "Perrito extraviado",
+      content: "El es pancho  se  extravió!!  Alrededores de la  invasión, el paraíso salió ayer a las 8 de la mañana y no ha vuelto cualquier información 321 9800084 o al 314 6355630 #Saravena #saravenaarauca @seguidores Fabian Acevedo Gomez",
+      image: "/dog.webp"
+    },
+    {
+      title: "Se alquila bodega en Saravena - Arauca",
+      content: "Se alquila bodega en Saravena mayor inf al 3203868974 Bodega de 180 cuadrados ubicada en la carrera  15 #12 10 barrio palmeras esquina #saravena  @laredstereo",
+      image: "/bodega.png"
+    },
+    {
+      title: "Se alquila bodega en Saravena - Arauca",
+      content: "Gran remate 📢 en la plaza de mercado de saravena venta o arriendo de mejora  de tres puestos de venta de verdura, en excelente estado listos para uso comercial por tan solo 💸5.500.000 Llame ya 321 4080071 @destacar #saravenaarauca #Saravena @destacar Cañas Yehin La RED Stereo",
+      image: "/plaza.webp"
     },
   ]
 
@@ -44,12 +64,24 @@ export default function HomePage() {
   ]
 
   const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % publications.length)
+    setCurrentSlide((prev) => (prev + 1) % events.length)
   }
 
   const prevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + publications.length) % publications.length)
+    setCurrentSlide((prev) => (prev - 1 + events.length) % events.length)
   }
+
+  const nextNewsSlide = () => {
+    setCurrentNewsSlide((prev) => (prev + 1) % news.length)
+  }
+
+  const prevNewsSlide = () => {
+    setCurrentNewsSlide((prev) => (prev - 1 + news.length) % news.length)
+  }
+
+  const close = () => setShowMobileNav(false)
+
+  const open = () => setShowMobileNav(true)
 
   useEffect(() => {
     const slider = collaboratorsRef.current
@@ -70,7 +102,60 @@ export default function HomePage() {
     <div className="flex flex-col min-h-screen bg-gray-50">
       <header className="sticky top-0 z-50 w-full border-b bg-white shadow-sm">
         <div className="container flex h-16 items-center justify-center">
-          <nav className="flex justify-center items-center space-x-6 text-sm font-medium">
+
+          {/* Nav mobile */}
+          <nav className="items-center space-x-6 text-sm font-medium flex md:hidden justify-between w-full">
+            <div className='h-20 aspect-square bg-white py-5 rounded-md shadow-md'>
+              <img
+                src="/logo.png"
+                alt="LaRedStereo Logo"
+                className="h-full w-full object-contain block"
+              />
+            </div>
+            <div className="gap-2 items-center hidden sm:flex">
+              <a className="transition-colors hover:text-orange-600 text-gray-600" href="#">
+                Nosotros
+              </a>
+              <a className="transition-colors hover:text-orange-600 text-gray-600" href="#">
+                Noticias
+              </a>
+              <a className="transition-colors hover:text-orange-600 text-gray-600" href="#">
+                Programación
+              </a>
+              <a className="transition-colors hover:text-orange-600 text-gray-600" href="#">
+                Contacto
+              </a>
+            </div>
+            <button onClick={open} className="block sm:hidden">
+              <MenuIcon />
+            </button>
+          </nav>
+
+          <nav className={cn("fixed h-screen top-0 left-0 p-4 pt-12 w-full bg-white/90 text-black backdrop-blur-lg md:hidden transition-all duration-300", {
+            "opacity-0 invisible": !showMobileNav
+          })}>
+            <ul className="flex flex-col gap-4 text-xl">
+              <li>
+                <a className="hover:text-landing-primary transition-all hover:ps-2" href="/#us">Nosotros</a>
+              </li>
+              <li>
+                <a className="hover:text-landing-primary transition-all hover:ps-2" href="/#schedules">Noticias</a>
+              </li>
+              <li>
+                <a className="hover:text-landing-primary transition-all hover:ps-2" href="/#trainers">Programacion</a>
+              </li>
+              <li>
+                <a className="hover:text-landing-primary transition-all hover:ps-2" href="/#contact">Contacto</a>
+              </li>
+            </ul>
+
+            <Button onClick={close} className="hover:bg-landing-primary absolute top-2 right-2 p-3 transition-colors bg-orange-600">
+              <X className="bg-orange-600" />
+            </Button>
+          </nav>
+
+          {/* Nav desktop */}
+          <nav className="justify-center items-center space-x-6 text-sm font-medium hidden md:flex">
             <a className="transition-colors hover:text-orange-600 text-gray-600" href="#">
               Nosotros
             </a>
@@ -100,7 +185,7 @@ export default function HomePage() {
         </div>
       </header>
       <main className="flex-1">
-        <section className="w-full py-12 md:py-24 lg:py-20 xl:py-48 bg-[url('/hero.jpeg')] px-8 bg-center">
+        <section className="w-full py-12 md:py-16 lg:py-20 xl:py-48 bg-[url('/hero.jpeg')] px-8 bg-center">
           <div className="container max-w-[1000px] p-10 md:px-6 bg-gradient-to-r from-gray-100/90 to-gray-200/90 rounded-xl">
             <div className="flex flex-col items-center space-y-4 text-center">
               <div className="space-y-2">
@@ -120,7 +205,7 @@ export default function HomePage() {
             </div>
           </div>
         </section>
-        <section className="w-full py-12 md:py-24 lg:py-20 bg-white">
+        <section className="w-full py-12 md:py-16 lg:py-20 bg-white">
           <div className="container px-4 md:px-6">
             <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-center mb-8 text-gray-800">
               Programación Reciente
@@ -145,7 +230,7 @@ export default function HomePage() {
             </div>
           </div>
         </section>
-        <section className="w-full py-12 md:py-24 lg:py-20">
+        <section className="w-full py-12 md:py-16 lg:py-20">
           <div className="container px-4 md:px-6">
             <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-center mb-8 text-gray-800">
               Últimos eventos
@@ -155,13 +240,13 @@ export default function HomePage() {
                 <CardContent className="p-6">
                   <div className="flex flex-col md:flex-row gap-6">
                     <img
-                      src={publications[currentSlide].image}
-                      alt={publications[currentSlide].title}
-                      className="rounded-lg object-contain h-[300px] aspect-square"
+                      src={events[currentSlide].image}
+                      alt={events[currentSlide].title}
+                      className="rounded-lg object-cover object-top h-[200px] aspect-square"
                     />
                     <div>
-                      <h3 className="text-2xl font-bold mb-2 text-gray-800">{publications[currentSlide].title}</h3>
-                      <p className="text-gray-600">{publications[currentSlide].content}</p>
+                      <h3 className="text-2xl font-bold mb-2 text-gray-800">{events[currentSlide].title}</h3>
+                      <p className="text-gray-600">{events[currentSlide].content}</p>
                     </div>
                   </div>
                 </CardContent>
@@ -185,7 +270,7 @@ export default function HomePage() {
             </div>
           </div>
         </section>
-        <section className="w-full py-12 md:py-24 lg:py-20 bg-white">
+        <section className="w-full py-12 md:py-16 lg:py-20 bg-white">
           <div className="container px-4 md:px-6">
             <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-center mb-8 text-gray-800">
               Últimos Noticias
@@ -195,13 +280,13 @@ export default function HomePage() {
                 <CardContent className="p-6">
                   <div className="flex flex-col md:flex-row gap-6">
                     <img
-                      src={publications[currentSlide].image}
-                      alt={publications[currentSlide].title}
-                      className="rounded-lg object-contain h-[300px] aspect-square"
+                      src={news[currentNewsSlide].image}
+                      alt={news[currentNewsSlide].title}
+                      className="rounded-lg object-cover object-top h-[200px] aspect-square"
                     />
                     <div>
-                      <h3 className="text-2xl font-bold mb-2 text-gray-800">{publications[currentSlide].title}</h3>
-                      <p className="text-gray-600">{publications[currentSlide].content}</p>
+                      <h3 className="text-2xl font-bold mb-2 text-gray-800">{news[currentNewsSlide].title}</h3>
+                      <p className="text-gray-600">{news[currentNewsSlide].content}</p>
                     </div>
                   </div>
                 </CardContent>
@@ -210,7 +295,7 @@ export default function HomePage() {
                 variant="ghost"
                 size="icon"
                 className="absolute left-0 top-1/2 transform -translate-y-1/2 text-gray-600"
-                onClick={prevSlide}
+                onClick={prevNewsSlide}
               >
                 <ChevronLeft className="h-6 w-6" />
               </Button>
@@ -218,14 +303,14 @@ export default function HomePage() {
                 variant="ghost"
                 size="icon"
                 className="absolute right-0 top-1/2 transform -translate-y-1/2 text-gray-600"
-                onClick={nextSlide}
+                onClick={nextNewsSlide}
               >
                 <ChevronRight className="h-6 w-6" />
               </Button>
             </div>
           </div>
         </section>
-        <section className="w-full py-12 md:py-24 lg:py-20 bg-gray-100">
+        <section className="w-full py-12 md:py-16 lg:py-20 bg-gray-100">
           <div className="container px-4 md:px-6">
             <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-center mb-8 text-gray-800">
               Colaboradores
