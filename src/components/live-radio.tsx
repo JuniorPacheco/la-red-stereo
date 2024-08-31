@@ -1,5 +1,5 @@
 import { Pause, Play, Volume2 } from "lucide-react"
-import { useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { Button } from "./ui/button"
 
 const LiveRadio = () => {
@@ -16,6 +16,11 @@ const LiveRadio = () => {
     radio.current?.pause()
     setIsPlaying(false)
   }
+
+  useEffect(() => {
+    setIsPlaying(true)
+    radio.current?.play()
+  }, [])
 
   return (
     <main>
