@@ -10,6 +10,7 @@ const LiveRadio = () => {
   const handlePlay = () => {
     radio.current?.play()
     setIsPlaying(true)
+    console.log('isPlaying', isPlaying)
   }
 
   const handlePause = () => {
@@ -23,11 +24,11 @@ const LiveRadio = () => {
         <div className="container flex items-center justify-between h-16 px-4">
           <div className="flex items-center space-x-4">
             <img
-              src="/logo.jpeg"
+              src="/logo.png"
               alt="Logo la-red-stereo"
               width={40}
               height={40}
-              className="rounded"
+              className="rounded-md shadow-md p-1"
             />
             <div>
               <div className="font-semibold text-gray-800">La Red Stereo</div>
