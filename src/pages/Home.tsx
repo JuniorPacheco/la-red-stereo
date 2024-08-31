@@ -111,7 +111,7 @@ export default function HomePage() {
                   Sintoniza la mejor música, noticias y entretenimiento. Transmitiendo 24/7 para tu placer auditivo.
                 </p>
               </div>
-              <div className="space-x-4">
+              <div className="flex flex-col gap-2 sm:gap-4 sm:flex-row">
                 <Button className="bg-orange-600 text-white hover:bg-orange-700">Escuchar en vivo</Button>
                 <Button variant="outline" className="text-gray-800 border-gray-300 hover:bg-gray-100">
                   Ver programación
