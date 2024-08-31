@@ -91,12 +91,12 @@ export default function HomePage() {
               Contacto
             </a>
           </nav>
-          <nav className="absolute right-2">
+          {/* <nav className="absolute right-2">
             <Button variant="ghost" size="icon" onClick={() => setShowSearch(!showSearch)}>
               <Search className="h-5 w-5 text-gray-600" />
               <span className="sr-only">Buscar</span>
             </Button>
-          </nav>
+          </nav> */}
         </div>
       </header>
       <main className="flex-1">
