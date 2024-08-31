@@ -1,11 +1,11 @@
 ---
-import '@/globals.css';
-import Layout from '../layouts/Layout.astro';
-import Home from './Home.tsx';
-import LiveRadio from '@/components/live-radio';
+import "@/globals.css";
+import Layout from "../layouts/Layout.astro";
+import Home from "./Home.tsx";
+import LiveRadio from "@/components/live-radio";
 ---
 
 <Layout title="Welcome to Astro.">
-	<Home client:visible />
-	<LiveRadio client:visible />
+  <Home client:load />
+  <LiveRadio client:load />
 </Layout>

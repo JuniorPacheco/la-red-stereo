@@ -10,7 +10,6 @@ const LiveRadio = () => {
   const handlePlay = () => {
     radio.current?.play()
     setIsPlaying(true)
-    console.log('isPlaying', isPlaying)
   }
 
   const handlePause = () => {
