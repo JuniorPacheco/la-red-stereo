@@ -1,5 +1,5 @@
 import { Pause, Play, Volume2 } from "lucide-react"
-import { useEffect, useRef, useState } from "react"
+import { useRef, useState } from "react"
 import { Button } from "./ui/button"
 
 const LiveRadio = () => {
@@ -16,11 +16,6 @@ const LiveRadio = () => {
     radio.current?.pause()
     setIsPlaying(false)
   }
-
-  useEffect(() => {
-    setIsPlaying(true)
-    radio.current?.play()
-  }, [])
 
   return (
     <main>
@@ -54,7 +49,7 @@ const LiveRadio = () => {
           </div>
         </div>
       </div>
-      <audio ref={radio} className="hidden" controls>
+      <audio autoPlay ref={radio} className="hidden" controls>
         <source src="https://stream.zeno.fm/5ldssiafsgruv" type="audio/mpeg" />
         Tu navegador no soporta la reproducción de audio.
       </audio>
